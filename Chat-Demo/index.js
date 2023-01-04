@@ -14,8 +14,14 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
+  // If you want to send a message to everyone except for a certain emitting socket, 
+  // we have the broadcast flag for emitting from that socket
+  socket.broadcast.emit('chat message', 'Someone has logged in...');
+
   socket.on('chat message', (msg) => {
     console.log('message: ' + msg);
+    io.emit('chat message', msg);
   });
 });
 
